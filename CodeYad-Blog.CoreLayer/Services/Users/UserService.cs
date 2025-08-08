@@ -35,14 +35,24 @@ namespace CodeYad_Blog.CoreLayer.Services.Users
             _context.SaveChanges();
             return OperationResult.Success();
         }
-        public OperationResult LoginUser(LoginDto loginDto) 
+        public UserDto LoginUser(LoginDto loginDto) 
         { 
             var hashedPassword = loginDto.Password.EncodeToMd5();
-            var isUserExist= _context.Users.Any(u=>u.UserName == loginDto.UserName && u.Password == hashedPassword);
-            if (!isUserExist) 
-                return OperationResult.NotFound();
+            var user = _context.Users.FirstOrDefault(u=>u.UserName == loginDto.UserName && u.Password == hashedPassword);
+            
+            if (user == null)
+                return null;
 
-            return OperationResult.Success();
+            var userDto = new UserDto()
+            {
+                FullName = user.FullName,
+                Password = user.Password,
+                Role = user.Role,
+                UserName = user.UserName,
+                RegisterDate = user.CreationDate,
+                UserId = user.Id            
+            };
+            return userDto;
         }
     }
 }

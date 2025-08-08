@@ -13,6 +13,6 @@ namespace CodeYad_Blog.CoreLayer.Services.Users
     public interface IUserService
     {
         OperationResult RegisterUser(UserRegisterDto registerDto);
-        OperationResult LoginUser(LoginDto loginDto);
+        UserDto LoginUser(LoginDto loginDto);
     }
 }

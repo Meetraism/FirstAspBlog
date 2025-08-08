@@ -1,5 +1,6 @@
 using CodeYad_Blog.CoreLayer.Services.Users;
 using CodeYad_Blog.DataLayer.Context;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,18 @@ builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddDbContext<BlogContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+ builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+})
+.AddCookie(options =>
+{
+    options.LoginPath = "/Auth/Login"; 
+    options.LogoutPath = "/Auth/Logout"; 
+    options.ExpireTimeSpan = TimeSpan.FromDays(30);
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -24,6 +37,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();

@@ -1,7 +1,10 @@
 ﻿using CodeYad_Blog.CoreLayer.Services.Users;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace CodeYad_Blog.Web.Pages.Auth
 {
@@ -26,16 +29,29 @@ namespace CodeYad_Blog.Web.Pages.Auth
         public IActionResult OnPost() 
         {
             if (!ModelState.IsValid) { return Page(); }
-            var result = _userService.LoginUser(new CoreLayer.DTOs.Users.LoginDto()
+            var user = _userService.LoginUser(new CoreLayer.DTOs.Users.LoginDto()
             {
                 UserName = UserName,
                 Password = Password
             });
-            if (result.Status == CoreLayer.Utilities.OperationResultStatus.NotFound)
+            if (user == null)
             {
                 ModelState.AddModelError("UserName", "کاربری با مشخصات واردشده یافت نشد.");
                 return Page();
             }
+            List<Claim> claims = new List<Claim>()
+            { 
+                new Claim("Test", "Test"),
+                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                new Claim(ClaimTypes.Name, user.FullName)
+            };
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var clientPrincipal = new ClaimsPrincipal(identity);
+            var properties = new AuthenticationProperties()
+            {
+                IsPersistent = true
+            };
+            HttpContext.SignInAsync(clientPrincipal, properties);
             return RedirectToPage("../Index");
         }
     }
