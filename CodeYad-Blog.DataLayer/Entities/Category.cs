@@ -16,6 +16,8 @@ namespace CodeYad_Blog.DataLayer.Entities
         public string Slug { get; set; }
         public string MetaTag { get; set; }
         public string MetaDiscription { get; set; }
+
+        public int? ParentId { get; set; }
         #region Relations
         public ICollection<Post> Posts { get; set; }
         #endregion
