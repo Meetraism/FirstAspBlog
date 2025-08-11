@@ -8,7 +8,7 @@ namespace CodeYad_Blog.CoreLayer.Services.Categories
 {
     public interface ICategoryService
     {
-        void CreateCategory(CreateCategoryDto createCategoryDto);
-        void EditCategory(CreateCategoryDto createCategoryDto);
+        //void CreateCategory(CreateCategoryDto createCategoryDto);
+        //void EditCategory(CreateCategoryDto createCategoryDto);
     }
 }
