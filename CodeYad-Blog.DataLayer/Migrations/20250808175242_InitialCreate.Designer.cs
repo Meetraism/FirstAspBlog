@@ -39,7 +39,7 @@ namespace CodeYad_Blog.DataLayer.Migrations
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
-                    b.Property<string>("MetaDiscription")
+                    b.Property<string>("MetaDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

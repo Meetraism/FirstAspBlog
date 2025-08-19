@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeYad_Blog.DataLayer.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20250724182826_init")]
-    partial class init
+    [Migration("20250819090511_add-a-prop-to-category")]
+    partial class addaproptocategory
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,6 +46,9 @@ namespace CodeYad_Blog.DataLayer.Migrations
                     b.Property<string>("MetaTag")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Slug")
                         .IsRequired()
