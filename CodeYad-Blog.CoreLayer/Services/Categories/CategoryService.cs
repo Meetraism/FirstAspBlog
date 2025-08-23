@@ -58,5 +58,14 @@ namespace CodeYad_Blog.CoreLayer.Services.Categories
             return _context.Categories.Select(c => CategoryMapper.Map(c)).ToList(); 
         }
 
+        public CategoryDto GetCategoryBy(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public CategoryDto GetCategoryBy(string slug)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,3 +1,4 @@
+using CodeYad_Blog.CoreLayer.Services.Categories;
 using CodeYad_Blog.CoreLayer.Services.Users;
 using CodeYad_Blog.DataLayer.Context;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddDbContext<BlogContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
  builder.Services.AddAuthentication(options =>
