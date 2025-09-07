@@ -1,4 +1,5 @@
 ﻿using CodeYad_Blog.CoreLayer.Services.Categories;
+using CodeYad_Blog.Web.Areas.Admin.Models.Categories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeYad_Blog.Web.Areas.Admin.Controllers
@@ -20,6 +21,12 @@ namespace CodeYad_Blog.Web.Areas.Admin.Controllers
         public IActionResult Add()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult Add(CreateCategoryViewModel createViewModel) 
+        {
+            var result = _categoryService.CreateCategory(createViewModel.MapToDto());
+            return RedirectToAction("Index");
         }
     }
 }
