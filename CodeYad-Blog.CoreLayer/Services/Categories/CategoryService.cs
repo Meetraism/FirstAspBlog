@@ -60,12 +60,20 @@ namespace CodeYad_Blog.CoreLayer.Services.Categories
 
         public CategoryDto GetCategoryBy(int id)
         {
-            throw new NotImplementedException();
+            var category = _context.Categories.FirstOrDefault(c => c.Id == id);
+
+            if (category == null)
+                return null;
+
+            return CategoryMapper.Map(category);
         }
 
         public CategoryDto GetCategoryBy(string slug)
         {
-            throw new NotImplementedException();
+            var category = _context.Categories.FirstOrDefault(c => c.Slug == slug);
+            if (category == null)
+                return null;
+            return CategoryMapper.Map(category);
         }
     }
 }

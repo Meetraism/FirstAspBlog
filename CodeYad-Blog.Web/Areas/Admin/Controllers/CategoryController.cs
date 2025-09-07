@@ -28,5 +28,19 @@ namespace CodeYad_Blog.Web.Areas.Admin.Controllers
             var result = _categoryService.CreateCategory(createViewModel.MapToDto());
             return RedirectToAction("Index");
         }
+        public IActionResult Edit(int id) 
+        { 
+            var category = _categoryService.GetCategoryBy(id);
+            if (category == null)
+                return RedirectToAction("Index");
+            var model = new EditCategoryViewModel()
+            {
+                Slug = category.Slug,
+                MetaTag = category.MetaTag,
+                MetaDescription = category.MetaDescription,
+                Title = category.Title
+            };
+            return View(model);
+        }
     }
 }

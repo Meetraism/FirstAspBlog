@@ -1,8 +1,6 @@
-﻿@using CodeYad_Blog.CoreLayer.DTOs.Categories
-@using CodeYad_Blog.Web.Areas.Admin.Models.Categories
-@model CreateCategoryViewModel
+﻿@model CodeYad_Blog.Web.Areas.Admin.Models.Categories.EditCategoryViewModel
 @{
-    ViewData["Title"] = "افزودن دسته بندی";
+    ViewData["Title"] = "ویرایش دسته بندی";
     var counter = 1;
 }
 <section class="content-header">
@@ -16,7 +14,7 @@
     </ol>
 </section>
 <section class="content">
-    <form class="box box-danger" method="post" asp-area="Admin" asp-controller="Category" asp-action="Add">
+    <form class="box box-danger" method="post" asp-area="Admin" asp-controller="Category" asp-action="Edit">
         <div class="box-body row">
             <div class="col-md-6">
                 @Html.EditorFor(m => m.Title)
