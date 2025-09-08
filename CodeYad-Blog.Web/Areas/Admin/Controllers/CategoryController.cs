@@ -1,4 +1,5 @@
 ﻿using CodeYad_Blog.CoreLayer.Services.Categories;
+using CodeYad_Blog.CoreLayer.Utilities;
 using CodeYad_Blog.Web.Areas.Admin.Models.Categories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,9 +24,14 @@ namespace CodeYad_Blog.Web.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Add(CreateCategoryViewModel createViewModel) 
+        public IActionResult Add(CreateCategoryViewModel vm) 
         {
-            var result = _categoryService.CreateCategory(createViewModel.MapToDto());
+            var result = _categoryService.CreateCategory(vm.MapToDto());
+            if (result.Status != OperationResultStatus.Success)
+            {
+                ModelState.AddModelError(nameof(vm.Slug), result.Message);
+                return View();
+            }
             return RedirectToAction("Index");
         }
         public IActionResult Edit(int id) 
@@ -41,6 +47,25 @@ namespace CodeYad_Blog.Web.Areas.Admin.Controllers
                 Title = category.Title
             };
             return View(model);
+        }
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public IActionResult Edit(int id, EditCategoryViewModel vm)
+        {
+            var result = _categoryService.EditCategory(new CoreLayer.DTOs.Categories.EditCategoryDto()
+            {
+                Slug = vm.Slug,
+                MetaTag = vm.MetaTag,
+                MetaDescription = vm.MetaDescription,
+                Title = vm.Title,
+                Id = id
+            });
+            if (result.Status != OperationResultStatus.Success)
+            {
+                ModelState.AddModelError(nameof(vm.Slug), result.Message);
+                return View();
+            }
+            return RedirectToAction("Index");
         }
     }
 }

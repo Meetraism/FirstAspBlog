@@ -22,12 +22,14 @@ namespace CodeYad_Blog.CoreLayer.Services.Categories
 
         public OperationResult CreateCategory(CreateCategoryDto command)
         {
+            if (IsSlugExist(command.Slug))
+                return OperationResult.Error("Slug Is Exist");
             var category = new Category()
             {
                 Title = command.Title,
                 IsDelete = false,
                 ParentId = command.ParentId,
-                Slug = command.Slug,
+                Slug = command.Slug.ToSlug(),
                 MetaTag = command.MetaTag,
                 MetaDescription = command.MetaDescription
             };
@@ -44,10 +46,14 @@ namespace CodeYad_Blog.CoreLayer.Services.Categories
             if (category==null)
                 return OperationResult.NotFound();
 
+            if (command.Slug.ToSlug() != category.Slug)
+                if (IsSlugExist(command.Slug))
+                    return OperationResult.Error("Slug Is Exist");
+
             category.Title = command.Title;
             category.MetaDescription = command.MetaDescription;
             category.MetaTag = command.MetaTag;
-            category.Slug = command.Slug;
+            category.Slug = command.Slug.ToSlug();
             _context.Update(category);
             _context.SaveChanges();
             return OperationResult.Success();
@@ -74,6 +80,11 @@ namespace CodeYad_Blog.CoreLayer.Services.Categories
             if (category == null)
                 return null;
             return CategoryMapper.Map(category);
+        }
+
+        public bool IsSlugExist(string slug)
+        {
+            return _context.Categories.Any(c => c.Slug == slug.ToSlug());
         }
     }
 }

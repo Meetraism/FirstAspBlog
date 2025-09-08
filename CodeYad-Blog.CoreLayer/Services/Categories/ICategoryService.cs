@@ -15,5 +15,6 @@ namespace CodeYad_Blog.CoreLayer.Services.Categories
         List<CategoryDto> GetAllCategories();
         CategoryDto GetCategoryBy(int id);
         CategoryDto GetCategoryBy(string slug);
+        bool IsSlugExist(string slug);
     }
 }
