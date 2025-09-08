@@ -16,11 +16,12 @@ namespace CodeYad_Blog.DataLayer.Entities
         [MaxLength(100)]
         public string Title { get; set; }
         [Required]
-        public string Discription { get; set; }
+        public string Description { get; set; }
         public int Visit { get; set; }
         [Required]
         [MaxLength(100)]
         public string Slug { get; set; }
+        public string ImageName { get; set; }
 
         #region Relations
 
