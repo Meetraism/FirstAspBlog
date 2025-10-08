@@ -16,6 +16,7 @@ namespace CodeYad_Blog.CoreLayer.Services.Posts
         OperationResult CreatePost(CreatePostDto command);
         OperationResult EditPost(EditPostDto command);
         PostDto GetPostById(int id);
+        PostFilterDto GetPostByFilter(PostFilterParams filterParams);
         bool IsSlugExist(string slug);
     }
     public class PostService : IPostService
@@ -43,6 +44,26 @@ namespace CodeYad_Blog.CoreLayer.Services.Posts
             return OperationResult.Success();
             
         }
+
+        //public PostFilterDto GetPostByFilter(PostFilterParams filterParams)
+        //{
+        //    var result = _context.Posts.OrderByDescending(d=>d.CreationDate).AsQueryable();
+
+        //    if (!string.IsNullOrWhiteSpace(filterParams.CategorySlug))
+        //        result = result.Where(r => r.Category.Slug == filterParams.CategorySlug);
+
+        //    if (!string.IsNullOrWhiteSpace(filterParams.Title))
+        //        result = result.Where(r=>r.Title.Contains(filterParams.Title));
+
+        //    var skip = (filterParams.PageId - 1) * filterParams.Take;
+        //    var pageCount = result.Count()/filterParams.Take;
+        //    return new PostFilterDto()
+        //    {
+        //        Posts = result.Skip(skip).Take(filterParams.Take)
+        //        .Select(Posts=>)
+        //    }
+
+        //}
 
         public PostDto GetPostById(int id)
         {
