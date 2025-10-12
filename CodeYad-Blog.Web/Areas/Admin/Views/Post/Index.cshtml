@@ -1,5 +1,4 @@
-﻿@using CodeYad_Blog.CoreLayer.DTOs.Categories
-@model List<CategoryDto>
+﻿@model CodeYad_Blog.CoreLayer.DTOs.Posts.PostFilterDto
 @{
     ViewData["Title"] = "دسته بندی ها";
     var counter = 1;
@@ -14,28 +13,34 @@
     </ol>
 </section>
 <section class="content">
-    <a class="btn btn-success" asp-area="Admin" asp-controller="Category" asp-action="Add">افزودن گروه جدید</a>
+    <a class="btn btn-success" asp-area="Admin" asp-controller="Category" asp-action="Add">افزودن مقاله جدید</a>
     <div class="box box-primary">
         <div class="box-body p-0">
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>عکس</th>
                         <th>عنوان</th>
-                        <th>زیرگروه</th>
+                        <th>slug</th>
+                        <th>گروه</th>
                         <th>عملیات</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach(var item in Model)
+                    @foreach (var item in Model.Posts)
                     {
                         <tr>
                             <td>@counter</td>
-                            <td>@item.Title</td>
-                            <td></td>
                             <td>
-                                <a asp-area="Admin" asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info btn-sm">ویرایش</a>
-                                <a asp-area="Admin" asp-controller="Category" asp-action="Add" asp-route-id="@item.Id" class="btn btn-success btn-sm">افزودن</a>
+                                <img src="/img/@item.ImageName"/>
+                            </td>
+                            <td>@item.Title</td>
+                            <td>@item.Slug</td>
+                            <td>@item.Category.Title</td>
+                            <td>
+                                <a asp-area="Admin" asp-controller="Category" asp-action="Edit" asp-route-id="@item.PostId" class="btn btn-info btn-sm">ویرایش</a>
+                                
                             </td>
                         </tr>
                         counter += 1;

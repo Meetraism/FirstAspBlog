@@ -12,6 +12,7 @@ namespace CodeYad_Blog.DataLayer.Entities
     {
         public int UserId { get; set; }
         public int CategoryId { get; set; }
+        public int? SubCategoryId { get; set; }
         [Required]
         [MaxLength(100)]
         public string Title { get; set; }
@@ -30,8 +31,10 @@ namespace CodeYad_Blog.DataLayer.Entities
 
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
-        public ICollection<PostComment> PostComments { get; set; }
 
+        [ForeignKey("SubCategoryId")]
+        public Category SubCategory { get; set; }
+        public ICollection<PostComment> PostComments { get; set; }
         #endregion
     }
 }

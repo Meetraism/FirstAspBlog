@@ -17,8 +17,12 @@ namespace CodeYad_Blog.DataLayer.Entities
         public string MetaTag { get; set; }
         public string MetaDescription { get; set; }
         public int? ParentId { get; set; }
+
         #region Relations
+        [InverseProperty("Category")]
         public ICollection<Post> Posts { get; set; }
+        [InverseProperty("SubCategory")]
+        public ICollection<Post> SubPosts { get; set; }
         #endregion
     }
 }
