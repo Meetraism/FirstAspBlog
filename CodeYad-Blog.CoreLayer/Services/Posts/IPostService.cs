@@ -45,25 +45,27 @@ namespace CodeYad_Blog.CoreLayer.Services.Posts
             
         }
 
-        //public PostFilterDto GetPostByFilter(PostFilterParams filterParams)
-        //{
-        //    var result = _context.Posts.OrderByDescending(d=>d.CreationDate).AsQueryable();
+        public PostFilterDto GetPostByFilter(PostFilterParams filterParams)
+        {
+            var result = _context.Posts.OrderByDescending(d => d.CreationDate).AsQueryable();
 
-        //    if (!string.IsNullOrWhiteSpace(filterParams.CategorySlug))
-        //        result = result.Where(r => r.Category.Slug == filterParams.CategorySlug);
+            if (!string.IsNullOrWhiteSpace(filterParams.CategorySlug))
+                result = result.Where(r => r.Category.Slug == filterParams.CategorySlug);
 
-        //    if (!string.IsNullOrWhiteSpace(filterParams.Title))
-        //        result = result.Where(r=>r.Title.Contains(filterParams.Title));
+            if (!string.IsNullOrWhiteSpace(filterParams.Title))
+                result = result.Where(r => r.Title.Contains(filterParams.Title));
 
-        //    var skip = (filterParams.PageId - 1) * filterParams.Take;
-        //    var pageCount = result.Count()/filterParams.Take;
-        //    return new PostFilterDto()
-        //    {
-        //        Posts = result.Skip(skip).Take(filterParams.Take)
-        //        .Select(Posts=>)
-        //    }
+            var skip = (filterParams.PageId - 1) * filterParams.Take;
+            var pageCount = result.Count() / filterParams.Take;
+            return new PostFilterDto()
+            {
+                Posts = result.Skip(skip).Take(filterParams.Take)
+                .Select(post=>PostMapper.MapToDto(post)).ToList(),
+                FilterParams = filterParams,
+                PageCount = pageCount
+            };
 
-        //}
+        }
 
         public PostDto GetPostById(int id)
         {
