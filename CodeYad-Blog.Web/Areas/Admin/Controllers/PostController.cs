@@ -24,5 +24,15 @@ namespace CodeYad_Blog.Web.Areas.Admin.Controllers
             var model = _postService.GetPostByFilter(param);
             return View(model);
         }
+        public IActionResult Add() 
+        {
+            return View();
+        }
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public IActionResult Add(string id) 
+        { 
+            return View(id);
+        }  
     }
 }
